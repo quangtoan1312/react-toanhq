@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -495,7 +494,7 @@ class TemperatureInput extends React.Component {
       <fieldset>
         <legend>Enter temperature in {scaleNames[scale]}:</legend>
         <input value={temperature}
-               onChange={this.handleChange} />
+          onChange={this.handleChange} />
       </fieldset>
     );
   }
@@ -544,7 +543,7 @@ root.render(<Calculator />);
 /**
  * Composition and Inheritance
  */
- function FancyBorder(props) {
+function FancyBorder(props) {
   return (
     <div className={'FancyBorder FancyBorder-' + props.color}>
       {props.children}
@@ -584,15 +583,15 @@ class SignUpDialog extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
-    this.state = {login: ''};
+    this.state = { login: '' };
   }
 
   render() {
     return (
       <Dialog title="Mars Exploration Program"
-              message="How should we refer to you?">
+        message="How should we refer to you?">
         <input value={this.state.login}
-               onChange={this.handleChange} />
+          onChange={this.handleChange} />
         <button onClick={this.handleSignUp}>
           Sign Me Up!
         </button>
@@ -601,7 +600,7 @@ class SignUpDialog extends React.Component {
   }
 
   handleChange(e) {
-    this.setState({login: e.target.value});
+    this.setState({ login: e.target.value });
   }
 
   handleSignUp() {
@@ -609,7 +608,153 @@ class SignUpDialog extends React.Component {
   }
 }
 
-root.render(<SignUpDialog/>);
+root.render(<SignUpDialog />);
+
+/**
+ * Context được sử dụng để truyền dữ liệu từ cha đến cháu ko cần qua con
+ */
+
+/**
+ * Error boundaries giúp sửa và khắc phục lỗi cho 1 components 
+ */
+
+/**
+ * Forward ref là method cho phép comp cha truyền ref đến comp con.
+ * fr đưa comp con 1 ref đến phần tử DOM đc tạo bởi lớp cha giúp đọc và sửa đổi ở bất cứ đâu
+ */
+
+/**
+ * Fragment là common pattern, phép return nhiều element từ 1 comp mà ko sinh ra DOM
+ */
+
+/**
+ * Higher Order Components là 1 function, nhận 1 comp trả về 1 comp mới
+ */
+
+/**
+ * Portals cho phép render 1 phần tử HTML độc lập với comp tree
+ */
+
+/**
+ * Profiler api do lường tần suất của 1 app react, xác định ứng dụng chạy chậm và tối ưu bộ nhớ
+ */
+
+/**
+ * Reconciliation so sánh 2 vitual Dom tree mới và cũ xem cần tạo mới element hay tái sử dụng 
+ */
+
+/**
+ * Render props là 1 kĩ thuật xử lí giúp sử dụng lại logic trên các comp
+ */
+
+class Mouse extends React.Component {
+  state = { x: 0, y: 0 }
+
+  handleMouseMove = (event) => {
+    const { clientX, clientY } = event
+    this.setState({
+      x: clientX,
+      y: clientY,
+    })
+  }
+
+  render() {
+    return (
+      <div style={{ height: '100%' }} onMouseMove={this.handleMouseMove}>
+        {this.props.render(this.state)}
+      </div>
+    )
+  }
+
+}
+
+class App extends React.Component {
+  render() {
+    return (
+      <div style={{ height: '100%' }}>
+        <Mouse
+          render={({ x, y }) => (
+            <h1>The mouse position is {x}, {y}</h1>
+          )} />
+      </div>
+    )
+  }
+}
+
+root.render(<App />);
+
+/**
+ * Static type checking sẽ phân tích mã nguồn trước khi biên dịch
+ * Flow kiểm tra dữ liệu bằng cách sử dụng các chỉ thị bằng comments
+ * TS kiểm tra cú pháp tại chương trình dịch, hỗ trợ oop
+ */
+
+/**
+ * Strict mode ngăn chặn, throws errors khi người lập trình xử lí unsafe
+ * Vô hiệu hóa tính năng gây nhầm lẫn
+ * Ngăn chặn 1 số từ làm keyword 
+ */
+
+/**
+ * PropTypes dùng để xác thực đầu vào của components
+ * Kiểm trả dữ liệu của props và comps
+ */
+
+/**
+ * Uncontrolled Component xử lí biểu mẫu bởi chính DOM
+ */
+
+/**
+ * Web Comps cung cấp khả năng đóng gói cho thành phần sử dụng lại
+ */
+
+/**
+ * Hook cho phép sd state và react feature khác mà không cần khai báo class
+ */
+
+/**
+ * useState: nhận giá trị khởi tạo và trả về mảng gồm 2 phần tử: state hiện tại và function để update state
+ */
+
+// constructor(props) {
+//   super(props);
+//   this.state = { isLoading: false }
+// }
+
+// onClick() {
+//   this.setState({
+//     isLoading: true,
+//   })
+// }
+
+// -------->
+
+// const [isLoading, setLoading] = useState(false);
+
+// onClick() {
+//      setLoading(true)
+//  }
+
+/**
+ * useEffect; xử lí các side effect(tương đương componentDidMount, componentDidUpdate và componentWillUnMount)
+ */
+
+function Example() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    document.title = `You clicked ${count} times`;
+  });
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+    </div>
+  );
+}
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
